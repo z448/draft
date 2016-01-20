@@ -28,3 +28,6 @@ Or to pipe command output into icli.txt file in iCloud on Mac which can be found
 ls -la | icl
 ```
 
+**gif**
+![control](https://raw.githubusercontent.com/z448/clicl/clicl.gif)
+
