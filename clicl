@@ -1,0 +1,42 @@
+#!/usr/bin/env perl
+
+use 5.010;
+use warnings;
+use strict;
+
+my $take_note = sub {
+    my ( $n, $os ) = @_;
+    my ( $note ) = ();
+    for( @$n ){ $note .= $_ };
+    my $push_note = system("$os->{copy} '$note' && '$os->{open}' '$os->{xurl}[0]'");
+    my $clip_note = system("$os->{paste}");
+
+    if( $push_note eq $clip_note ){ 
+        print "note".' >> '.chomp($$n[0]).' << '."saved to iCloud & clipboard\n";
+    } else {
+        print "some error\n";
+    }
+};
+
+
+sub note {
+    my ( @n ) = ();
+    my $ios = {
+        #note    =>  sub { my $note; for( @n ){ $note .= $_ }; return $note },
+        open    =>  'uiopen',
+        xurl    =>  [   'drafts4://x-callback-url/runAction?text=cli&action=icloud',
+                        'drafts://x-callback-url/runAction?text=cli&action=icloud',
+                    ],
+        copy    =>  'pbcopy',
+        paste   =>  'pbpaste',
+    };
+
+    while( <> ){
+            push @n, $_;
+    }
+
+    my $n = $take_note->(\@n, $ios);
+    print $n;
+}
+
+note();
