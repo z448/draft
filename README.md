@@ -29,5 +29,5 @@ ls -la | icl
 ```
 
 **gif**
-![control](https://raw.githubusercontent.com/z448/clicl/clicl.gif)
+![clicl](https://raw.githubusercontent.com/z448/clicl/master/clicl.gif)
 
