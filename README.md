@@ -35,7 +35,4 @@ ls -la | dft
 
 **gif**
 
-![clicl](https://raw.githubusercontent.com/z448/clicl/master/clicl.gif)
-
-![draft](https://giraffe.arvixe.com/~zed448/load/index.php/s/nT7oGPfqN5dRjNv/download)
-
+![clicl](https://raw.githubusercontent.com/z448/clicl/master/draft.gif)
