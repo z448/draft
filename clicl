@@ -11,9 +11,12 @@ my $take_note = sub {
     chomp( my $title = $$n[0] ); 
 
     for( @$n ){ 
-        $note .= $_ ;
+        $note .= "$_";
     }; 
 
+    unless( $note =~ /\#\#.*/ ){
+        $note = '```bash'.$note.'```'."\n".'------';
+    } else { $note = $note."\n".'------'; }
     my $push_note = system("$os->{copy} '$note' && '$os->{open}' '$os->{xurl}[0]'");
     my $clip_note = system("$os->{paste}");
 
@@ -36,6 +39,9 @@ sub note {
         copy    =>  'pbcopy',
         paste   =>  'pbpaste',
     };
+
+    my $ios_json = encode_json $ios;
+    print $ios_json;
 
 
     while( <> ){
