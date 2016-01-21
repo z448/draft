@@ -1,5 +1,5 @@
-# clicl
-**CLI** tool for **ios** to pipe command output into **iCloud** using x-callback-url
+# draft
+**CLI** tool for **ios** to pipe command output into **iCloud** using iOS Drafts x-callback-url
 
 So far simple Perl script that will push note from terminal into iCloud using Drafts x-callback-url for iCloud. Can by changed to support other x-callback capable apps but im using Drafts ever since i lost JB, and it's meant to be sort of 'middleware-for-notes'.
 
