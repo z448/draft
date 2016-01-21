@@ -35,4 +35,4 @@ ls -la | dft
 
 **gif**
 
-![clicl](https://raw.githubusercontent.com/z448/clicl/master/draft.gif)
+![draft](https://github.com/z448/draft/blob/master/draft.gif)
