@@ -1,10 +1,10 @@
 ###draft
 **CLI** tool for **ios** to pipe command output into **iCloud** using iOS Drafts x-callback-url
 
------
 *update*
 File is now markdown instead of txt, piping command to draft will prepend/append bash script format. First line of note when not piping command is note title, see gif bellow for details.
------
+
+
 So far simple Perl script that will push note from terminal into iCloud using Drafts x-callback-url for iCloud. Can by changed to support other x-callback capable apps but Drafts it's meant to be sort of middleware-for-notes.
 
 **Setup** ( might be automated in far future )
