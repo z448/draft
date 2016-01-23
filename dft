@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-##rest
+
 #
 use 5.010;
 use warnings;
@@ -9,7 +9,8 @@ use JSON;
 my $take_note = sub {
     my ( $n, $os ) = @_;
     my ( $note ) = ();
-    chomp( my $title = $$n[0] ); 
+    my $title = $$n[0]; 
+    #chomp( my $title = $$n[0] ); 
 
     for( @$n ){ 
         $note .= "$_";
@@ -18,6 +19,7 @@ my $take_note = sub {
     unless( $note =~ /\#\#.*/ ){
         $note = '```bash'.$note.'```'."\n";
     } else { $note = $note."\n"; }
+
     my $push_note = system("$os->{copy} '$note' && '$os->{open}' '$os->{xurl}[0]'");
     my $clip_note = system("$os->{paste}");
 
@@ -42,7 +44,7 @@ sub note {
     };
 
     my $ios_json = encode_json $ios;
-    print $ios_json;
+#    print $ios_json;
 
 
     while( <> ){
