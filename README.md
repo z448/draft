@@ -2,7 +2,8 @@
 **CLI** tool for **ios** to pipe command output into **iCloud** using iOS Drafts x-callback-url
 
 **update**
-
+- pushover notifi; works on 5.10+
+- 
 File is now markdown instead of txt, piping command to draft will prepend/append bash script format. First line of note when not piping command is note title, see gif bellow for details.
 
 
