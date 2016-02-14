@@ -1,58 +1,37 @@
 #!/usr/bin/env perl
 
-#
 use 5.010;
 use warnings;
 use strict;
 use JSON;
 
 my $take_note = sub {
-    my ( $n, $os ) = @_;
-    my ( $note ) = ();
-    my $title = $$n[0]; 
-    #chomp( my $title = $$n[0] ); 
+    my ( $n ) = @_;
+    my $c = '.draft';
 
-    for( @$n ){ 
-        $note .= "$_";
-    }; 
+    open( my $fh, "<", "$c" ) || die "dead while opening";
+    my $j = <$fh>;
+    close $fh;
+    my $os = decode_json $j;
+    my $note = '';
 
-    unless( $note =~ /\#\#.*/ ){
-        $note = '```bash'.$note.'```'."\n";
-    } else { $note = $note."\n"; }
-
-    my $push_note = system("$os->{copy} '$note' && '$os->{open}' '$os->{xurl}[0]'");
-    my $clip_note = system("$os->{paste}");
-
-    if( $push_note eq $clip_note ){ 
-        print "note".' "'.$title.'" '."saved to iCloud & clipboard\n";
-    } else {
-        print "some error\n";
-    }
-};
-
-
-sub note {
-    my ( @n ) = ();
-    my $ios = {
-        #note    =>  sub { my $note; for( @n ){ $note .= $_ }; return $note },
-        open    =>  'uiopen',
-        xurl    =>  [   'drafts4://x-callback-url/runAction?text=cli&action=icloud',
-                        'drafts4://x-callback-url/runAction?text=cli&action=clicl',
-                    ],
-        copy    =>  'pbcopy',
-        paste   =>  'pbpaste',
+    for( @$n ){
+        chomp;
+        $note .= "$_".'<br>';
     };
 
-    my $ios_json = encode_json $ios;
-#    print $ios_json;
+    my $push_note = system("echo '$note' | '$os->{copy}'");
+    my $draft = system("$os->{xurl}[0]");
+    my $close = system("$os->{close}[0]");
+    return $push_note;
 
+};
 
-    while( <> ){
-            push @n, $_;
-    }
-
-    my $n = $take_note->(\@n, $ios);
-    say $n;
+sub note {
+    my @n = ();
+    while( <> ){ push @n, $_ }
+    my $success = $take_note->(\@n );
+    say $success;
 }
 
 note();
