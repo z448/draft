@@ -15,18 +15,18 @@ my $make_link = sub {
     $file = $cwd . '/' . "$file";
     symlink( $file, $link );
     return $link;
-}
+};
     
 
 my $take_note = sub {
-    my ( $note) = @_;
+    my $note = shift;
     
-    my $config = $make_link->(.draft);
+    my $config = $make_link->('.draft');
     open( my $fh, "<", "$config" ) || die "cant open $config: $!";
     my $json = <$fh>;
     close $fh;
     my $os = decode_json $json;
-    my $note = '';
+    #$note = '';
 
     for( @$note){
         chomp;
