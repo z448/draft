@@ -6,16 +6,16 @@ use strict;
 use JSON;
 
 my $take_note = sub {
-    my ( $n ) = @_;
-    my $c = '.draft';
+    my ( $note) = @_;
+    my $config = '.draft';
 
-    open( my $fh, "<", "$c" ) || die "dead while opening";
-    my $j = <$fh>;
+    open( my $fh, "<", "$config" ) || die "cant open $config: $!";
+    my $json = <$fh>;
     close $fh;
-    my $os = decode_json $j;
+    my $os = decode_json $json;
     my $note = '';
 
-    for( @$n ){
+    for( @$note){
         chomp;
         $note .= "$_".'<br>';
     };
@@ -30,8 +30,7 @@ my $take_note = sub {
 sub note {
     my @n = ();
     while( <> ){ push @n, $_ }
-    my $success = $take_note->(\@n );
-    say $success;
+    print 'ok' . "\n" unless $take_note->(\@n );
 }
 
 note();
