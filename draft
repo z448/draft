@@ -8,10 +8,10 @@ use Cwd qw< abs_path >;
 use JSON::PP;
 
 my $make_link = sub {
-    my $file = shift;
-    my $link = "$ENV{HOME}/.drafts";
+    my $link = shift;
+    $link = "$ENV{HOME}/$link";
     my $cwd = abs_path('.');
-    $file = $cwd . '/' . "$file";
+    my $file = $cwd . '/' . ".draft";
     symlink( $file, $link );
     return $link;
 };
@@ -20,7 +20,7 @@ my $make_link = sub {
 my $take_note = sub {
     my $note = shift;
     
-    my $config = $make_link->('.draft.bak');
+    my $config = $make_link->('.draft');
     open( my $fh, "<", "$config" ) || die "cant open $config: $!";
     my $json = <$fh>;
     close $fh;
