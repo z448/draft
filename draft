@@ -20,7 +20,7 @@ my $make_link = sub {
 my $take_note = sub {
     my $note = shift;
     
-    my $config = $make_link->('.draft');
+    my $config = $make_link->('.draft.bak');
     open( my $fh, "<", "$config" ) || die "cant open $config: $!";
     my $json = <$fh>;
     close $fh;
