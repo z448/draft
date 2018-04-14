@@ -18,16 +18,16 @@ my $make_link = sub {
     
 
 my $take_note = sub {
-    my $note = shift;
+    my $notes = shift;
     
     my $config = $make_link->('.draft');
     open( my $fh, "<", "$config" ) || die "cant open $config: $!";
     my $json = <$fh>;
     close $fh;
     my $os = decode_json $json;
-    #$note = '';
+    my $note = '';
 
-    for( @$note){
+    for( @$notes ){
         chomp;
         $note .= "$_".'<br>';
     };
