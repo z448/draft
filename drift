@@ -1,0 +1,55 @@
+#!/usr/bin/env perl
+#
+use 5.010;
+use JSON::PP;
+
+    #redirect
+open my $SHTUP, '>&', STDOUT;
+open STDOUT, '>', '/tmp/.draft';
+
+my $shoot = sub {
+        my $shots = shift;
+        my $point = 'pbcopy';
+    #-----------------------no file to read -> read stdout
+    unless( $ARGV[0] ){
+        my $note = '###';
+        print $note;
+        while( <> ){ print $_ }
+
+    } else {
+        #-------------------read file, bash code tag default; todo read hashbang instead
+        $note = '```bash'."\n";
+
+        open( my $fh, "< $ARGV[0]" );
+
+        while(<$fh>){
+            $note .= $_ 
+        };
+        $note = $note . "\n" . '```';
+        say $note;
+        close $fh;
+    }
+
+    open STDOUT, '>&', $SHTUP;
+    system("cat /tmp/.draft| $point");
+    
+    for my $shot ( @$shots ){
+        sleep 1;
+        system("$shot");
+    }
+};
+
+my $j = <DATA>;
+my $shells = decode_json $j;
+
+my $drift = $shoot->($shells);
+
+#todo:
+#drafts4://x-callback-url/open?uuid=[[uuid]]
+
+#creates activator listeners hash
+#perl -MData::Dumper -e 'my @l;my %lsr;push @l,(qx|activator listeners|); for(@l){s/(.*?\.)(.*?\.)(.*)/$1$2$3/; $lsr{"$2"}="$1$2$3"}; print Dumper(\%lsr);'
+
+__DATA__
+["uiopen \"drafts4:\/\/x-callback-url\/runAction?text=cli&action=icloud\"","uiopen \"drafts4:\/\/x-callback-url\/runAction?text=cli&action=trgrgoogle\"","uiopen \"drafts4:\/\/x-callback-url\/runAction?text=cli&action=drop\"","activator send libactivator.system.first-springboard-page"]
+mobile:~/scripts
